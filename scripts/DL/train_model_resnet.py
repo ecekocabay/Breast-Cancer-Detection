@@ -17,7 +17,7 @@ EPOCHS = 10
 LEARNING_RATE = 0.001
 NUM_CLASSES = 3  # Benign, Malignant, Normal
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-WEIGHTS_PATH = "/resnet18-f37072fd.pth"  # Path to ResNet18 weights
+WEIGHTS_PATH = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/resnet18-f37072fd.pth"  # Path to ResNet18 weights
 
 
 # Custom Dataset Class
@@ -125,7 +125,7 @@ def evaluate_model(model, test_loader, device):
 if __name__ == "__main__":
     # Load and preprocess data
     image_folder = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/output_images"
-    labels_file = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv"
+    labels_file = "/data/mias_labels_corrected.csv"
     image_paths, labels = load_data(image_folder, labels_file)
 
     # Split data
@@ -160,7 +160,7 @@ if __name__ == "__main__":
     trained_model = train_model(model, criterion, optimizer, train_loader, val_loader, EPOCHS, DEVICE)
 
     # Save the model
-    model_path = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/breast_cancer_resnet18.pth"
+    model_path = "/models/breast_cancer_resnet18.pth"
     torch.save(trained_model.state_dict(), model_path)
     print(f"Model saved to {model_path}")
 
