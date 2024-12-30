@@ -191,7 +191,7 @@ def load_model(model_class, path, device, num_classes=NUM_CLASSES):
 if __name__ == "__main__":
     # Load and preprocess data
     image_folder = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/output_images"
-    labels_file = "Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv"
+    labels_file = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv"
     image_paths, labels = load_data(image_folder, labels_file)
 
     # Split data
@@ -242,7 +242,7 @@ if __name__ == "__main__":
     trained_model = train_model(model, criterion, optimizer, train_loader, val_loader, EPOCHS, DEVICE)
 
     # Save the trained model
-    model_path = "Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/breast_cancer_cnn_model.pth"
+    model_path = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/breast_cancer_cnn_model.pth"
     save_model(trained_model, model_path)
 
     # Evaluate the model

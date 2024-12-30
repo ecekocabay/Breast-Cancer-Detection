@@ -50,8 +50,8 @@ def handle_imbalance(X, y):
 
 if __name__ == "__main__":
     # Example usage
-    features_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/lbp_feature_matrix.csv'  # Replace with the correct path to your features file
-    labels_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv'  # Replace with the correct path to your labels file
+    features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/lbp_feature_matrix.csv'  # Replace with the correct path to your features file
+    labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv'  # Replace with the correct path to your labels file
 
     #Load data
     print("Loading data...")
@@ -70,8 +70,8 @@ if __name__ == "__main__":
     X_resampled, y_resampled = handle_imbalance(X_scaled, y)
 
     # Save the preprocessed data
-    preprocessed_features_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'
-    preprocessed_labels_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'
+    preprocessed_features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'
+    preprocessed_labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'
     pd.DataFrame(X_resampled).to_csv(preprocessed_features_file, index=False)
     pd.DataFrame(y_resampled, columns=['Class']).to_csv(preprocessed_labels_file, index=False)
 

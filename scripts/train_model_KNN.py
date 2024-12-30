@@ -69,8 +69,8 @@ def evaluate_model(model, X_test, y_test):
 
 if __name__ == "__main__":
     # File paths for preprocessed data
-    features_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with the correct path to your features file
-    labels_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
+    features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with the correct path to your features file
+    labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
 
     # Step 1: Load preprocessed data
     print("Loading preprocessed data...")
@@ -90,5 +90,5 @@ if __name__ == "__main__":
 
     # Step 5: Save the trained model and scaler
     print("Saving the trained model and scaler...")
-    joblib.dump(knn_model, '../models/knn_model.pkl')
+    joblib.dump(knn_model, '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/knn_model.pkl')
     print("Trained model saved as 'knn_model.pkl'.")
