@@ -70,36 +70,36 @@ if __name__ == "__main__":
     features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with your features file path
     labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with your labels file path
 
-    # Step 1: Load preprocessed data
+    # Load preprocessed data
     print("Loading preprocessed data...")
     X, y = load_preprocessed_data(features_file, labels_file)
 
-    # Step 2: Split the data into training and testing sets
+    #  Split the data into training and testing sets
     print("Splitting data into training and testing sets...")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-    # Step 3: Apply SMOTE to the training set
+    #  Apply SMOTE to the training set
     print("Applying SMOTE to handle class imbalance...")
     smote = SMOTE(random_state=42)
     X_train, y_train = smote.fit_resample(X_train, y_train)
     print("SMOTE applied. Class distribution after resampling:")
     print(pd.Series(y_train).value_counts())
 
-    # Step 4: Normalize the features
+    #  Normalize the features
     print("Normalizing features...")
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
 
-    # Step 5: Train the Random Forest model
+    #Train the Random Forest model
     print("Training Random Forest model with hyperparameter tuning...")
     rf_model = train_random_forest(X_train, y_train)
 
-    # Step 6: Evaluate the model
+    #  Evaluate the model
     print("Evaluating the model...")
     evaluate_model(rf_model, X_test, y_test)
 
-    # Step 7: Save the trained model and scaler
+    #  Save the trained model and scaler
     print("Saving the trained model and scaler...")
     joblib.dump(rf_model, '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/random_forest_model.pkl')
     joblib.dump(scaler, '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/scaler.pkl')
