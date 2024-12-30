@@ -69,8 +69,8 @@ def evaluate_model(model, X_test, y_test):
 
 if __name__ == "__main__":
     # File paths for preprocessed data
-    features_file = '/data/preprocessed_features.csv'  # Replace with the correct path to your features file
-    labels_file = '/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
+    features_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with the correct path to your features file
+    labels_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
 
     # Step 1: Load preprocessed data
     print("Loading preprocessed data...")

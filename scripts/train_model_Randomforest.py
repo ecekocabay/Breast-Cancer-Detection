@@ -67,8 +67,8 @@ def evaluate_model(model, X_test, y_test):
 
 if __name__ == "__main__":
     # File paths for preprocessed data
-    features_file = '/data/preprocessed_features.csv'  # Replace with your features file path
-    labels_file = '/data/preprocessed_labels.csv'  # Replace with your labels file path
+    features_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with your features file path
+    labels_file = 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with your labels file path
 
     # Step 1: Load preprocessed data
     print("Loading preprocessed data...")
@@ -101,7 +101,7 @@ if __name__ == "__main__":
 
     # Step 7: Save the trained model and scaler
     print("Saving the trained model and scaler...")
-    joblib.dump(rf_model, '../models/random_forest_model.pkl')
-    joblib.dump(scaler, '../models/scaler.pkl')
+    joblib.dump(rf_model, 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/random_forest_model.pkl')
+    joblib.dump(scaler, 'Users/ecekocabay/Desktop/BreastCancerDetection_noyan/models/scaler.pkl')
     print("Trained model saved as 'random_forest_model.pkl'.")
     print("Scaler saved as 'scaler.pkl'.")
