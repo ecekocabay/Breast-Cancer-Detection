@@ -22,7 +22,6 @@ NUM_CLASSES = 3  # Benign, Malignant, Normal
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-# Custom Dataset Class
 class BreastCancerDataset(Dataset):
     def __init__(self, features, labels, feature_shape):
         """
@@ -192,7 +191,7 @@ def load_model(model_class, path, device, num_classes=NUM_CLASSES):
 if __name__ == "__main__":
     # Load and preprocess data
     image_folder = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/output_images"
-    labels_file = "/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv"
+    labels_file = "/data/mias_labels_corrected.csv"
     image_paths, labels = load_data(image_folder, labels_file)
 
     # Split data
@@ -243,7 +242,7 @@ if __name__ == "__main__":
     trained_model = train_model(model, criterion, optimizer, train_loader, val_loader, EPOCHS, DEVICE)
 
     # Save the trained model
-    model_path = "breast_cancer_cnn_model.pth"
+    model_path = "../models/breast_cancer_cnn_model.pth"
     save_model(trained_model, model_path)
 
     # Evaluate the model

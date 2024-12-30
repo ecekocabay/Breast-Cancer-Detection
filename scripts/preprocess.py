@@ -50,28 +50,28 @@ def handle_imbalance(X, y):
 
 if __name__ == "__main__":
     # Example usage
-    features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/lbp_feature_matrix.csv'  # Replace with the correct path to your features file
-    labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/mias_labels_corrected.csv'  # Replace with the correct path to your labels file
+    features_file = '/data/lbp_feature_matrix.csv'  # Replace with the correct path to your features file
+    labels_file = '/data/mias_labels_corrected.csv'  # Replace with the correct path to your labels file
 
-    # Step 1: Load data
+    #Load data
     print("Loading data...")
     X, y = load_data(features_file, labels_file)
 
-    # Step 2: Normalize features
+    # Normalize features
     print("Normalizing features...")
     X_scaled, scaler = normalize_features(X)
 
     # Save the scaler
-    joblib.dump(scaler, 'scaler.pkl')
+    joblib.dump(scaler, '../models/scaler.pkl')
     print("Scaler saved as 'scaler.pkl'.")
 
-    # Step 3: Handle class imbalance
+    # Handle class imbalance
     print("Handling class imbalance...")
     X_resampled, y_resampled = handle_imbalance(X_scaled, y)
 
     # Save the preprocessed data
-    preprocessed_features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'
-    preprocessed_labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'
+    preprocessed_features_file = '/data/preprocessed_features.csv'
+    preprocessed_labels_file = '/data/preprocessed_labels.csv'
     pd.DataFrame(X_resampled).to_csv(preprocessed_features_file, index=False)
     pd.DataFrame(y_resampled, columns=['Class']).to_csv(preprocessed_labels_file, index=False)
 

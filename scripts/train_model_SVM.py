@@ -1,9 +1,10 @@
 import pandas as pd
 import joblib
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import StandardScaler
+from imblearn.over_sampling import SMOTE
 
 
 def load_preprocessed_data(features_file, labels_file):
@@ -20,26 +21,26 @@ def load_preprocessed_data(features_file, labels_file):
     return X, y
 
 
-def train_knn(X_train, y_train):
+def train_svm(X_train, y_train):
     """
-    Train a K-NN classifier with hyperparameter tuning.
+    Train an SVM classifier with hyperparameter tuning.
 
     :param X_train: Training feature matrix.
     :param y_train: Training labels.
-    :return: Best K-NN model
+    :return: Best SVM model
     """
     # Define parameter grid for hyperparameter tuning
     param_grid = {
-        'n_neighbors': [3, 5, 7, 9, 11],
-        'metric': ['euclidean', 'manhattan', 'minkowski'],
-        'weights': ['uniform', 'distance']
+        'C': [0.1, 1, 10, 100],
+        'kernel': ['linear', 'rbf', 'poly', 'sigmoid'],
+        'gamma': ['scale', 'auto']
     }
 
-    # Initialize the K-NN classifier
-    knn = KNeighborsClassifier()
+    # Initialize the SVM classifier
+    svm = SVC()
 
     # Use GridSearchCV to find the best parameters
-    grid_search = GridSearchCV(knn, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
+    grid_search = GridSearchCV(svm, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
     grid_search.fit(X_train, y_train)
 
     print(f"Best Parameters: {grid_search.best_params_}")
@@ -51,9 +52,9 @@ def train_knn(X_train, y_train):
 
 def evaluate_model(model, X_test, y_test):
     """
-    Evaluate the trained K-NN model on the test set.
+    Evaluate the trained SVM model on the test set.
 
-    :param model: Trained K-NN model.
+    :param model: Trained SVM model.
     :param X_test: Test feature matrix.
     :param y_test: Test labels.
     """
@@ -69,8 +70,8 @@ def evaluate_model(model, X_test, y_test):
 
 if __name__ == "__main__":
     # File paths for preprocessed data
-    features_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_features.csv'  # Replace with the correct path to your features file
-    labels_file = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
+    features_file = '/data/preprocessed_features.csv'  # Replace with the correct path to your features file
+    labels_file = '/data/preprocessed_labels.csv'  # Replace with the correct path to your labels file
 
     # Step 1: Load preprocessed data
     print("Loading preprocessed data...")
@@ -78,17 +79,32 @@ if __name__ == "__main__":
 
     # Step 2: Split the data into training and testing sets
     print("Splitting data into training and testing sets...")
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-    # Step 3: Train the K-NN model
-    print("Training K-NN model with hyperparameter tuning...")
-    knn_model = train_knn(X_train, y_train)
+    # Step 3: Apply SMOTE to the training set
+    print("Applying SMOTE to handle class imbalance...")
+    smote = SMOTE(random_state=42)
+    X_train, y_train = smote.fit_resample(X_train, y_train)
+    print("SMOTE applied. Class distribution after resampling:")
+    print(pd.Series(y_train).value_counts())
 
-    # Step 4: Evaluate the model
+    # Step 4: Normalize the features
+    print("Normalizing features...")
+    scaler = StandardScaler()
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
+
+    # Step 5: Train the SVM model
+    print("Training SVM model with hyperparameter tuning...")
+    svm_model = train_svm(X_train, y_train)
+
+    # Step 6: Evaluate the model
     print("Evaluating the model...")
-    evaluate_model(knn_model, X_test, y_test)
+    evaluate_model(svm_model, X_test, y_test)
 
-    # Step 5: Save the trained model and scaler
+    # Step 7: Save the trained model and scaler
     print("Saving the trained model and scaler...")
-    joblib.dump(knn_model, 'knn_model.pkl')
-    print("Trained model saved as 'knn_model.pkl'.")
+    joblib.dump(svm_model, '../models/svm_model.pkl')
+    joblib.dump(scaler, '../models/scaler.pkl')
+    print("Trained model saved as 'svm_model.pkl'.")
+    print("Scaler saved as 'scaler.pkl'.")

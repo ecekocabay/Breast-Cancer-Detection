@@ -51,7 +51,7 @@ def extract_features(image_folder, output_csv, radius=1, n_points=8):
     print(f"Feature matrix successfully saved to '{output_csv}'.")
 
 if __name__ == "__main__":
-    # Example usage
+
     image_folder = r'/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/output_images'  # Update with your folder path
     output_csv = '/Users/ecekocabay/Desktop/BreastCancerDetection_noyan/data/lbp_feature_matrix.csv'  # Desired output CSV file name
     extract_features(image_folder, output_csv)

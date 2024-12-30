@@ -43,33 +43,33 @@ def predict_image(image_path, model_path, scaler_path=None, resize_shape=(256, 2
     image = io.imread(image_path, as_gray=True)
     image = (image * 255).astype(np.uint8)  # Normalize for OpenCV compatibility
 
-    # Step 1: Apply CLAHE
+    #  Apply CLAHE
     enhanced_image = segmentation.apply_clahe(image)
 
-    # Step 2: Perform Region Growing
+    #  Perform Region Growing
     center_seed = (enhanced_image.shape[1] // 2, enhanced_image.shape[0] // 2)
     segmented_mask = segmentation.region_growing(enhanced_image, center_seed, threshold=15)
 
-    # Step 3: Apply Dilation
+    # Apply Dilation
     dilated_mask = segmentation.apply_dilation(segmented_mask)
 
-    # Step 4: Crop the Segmented Region
+    # Crop the Segmented Region
     cropped_image = segmentation.crop_segmented_region(image, dilated_mask)
     if cropped_image is None:
         raise ValueError("No region could be segmented from the image.")
 
-    # Step 5: Resize the Cropped Region for Consistency
+    #  Resize the Cropped Region for Consistency
     resized_image = resize(cropped_image, resize_shape, anti_aliasing=True)
 
-    # Step 6: Extract LBP Features
+    #  Extract LBP Features
     lbp_features = compute_lbp(resized_image)
     features = np.array([lbp_features])  # Convert to 2D array for prediction
 
-    # Step 7: Normalize the Features (if scaler is available)
+    #  Normalize the Features (if scaler is available)
     if scaler:
         features = scaler.transform(features)
 
-    # Step 8: Predict the Class
+    #  Predict the Class
     prediction = model.predict(features)
     return prediction[0]
 
